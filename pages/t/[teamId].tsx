@@ -120,46 +120,47 @@ const TeamProfile = (props: TeamProfileProps) => {
                   <TabList onChange={(_, tab) => setSelectedTab(tab)}>
                     <Tab label="Инфо" value="info" />
                     {hasAnime && <Tab label="Аниме" value="anime" />}
-                    {hasManga && <Tab label="Манга" value="manga" />}
+                    {hasManga || (true && <Tab label="Манга" value="manga" />)}
                     {hasRanobe && <Tab label="Ранобэ" value="ranobe" />}
                   </TabList>
                   <TabPanel value="info">
                     <TextCollapse>{team?.description}</TextCollapse>
                   </TabPanel>
                   {hasAnime && <TabPanel value="anime">No Content</TabPanel>}
-                  {hasManga && (
-                    <TabPanel value="manga">
-                      <Stack>
-                        {isAuthor && (
-                          <Link
-                            href={{ pathname: '/m/new', query: { t: teamId } }}
-                            passHref
-                            style={{ color: 'unset' }}
-                          >
-                            <Button
-                              LinkComponent="a"
-                              variant="contained"
-                              sx={{ float: 'right', mt: 1, mb: 1 }}
+                  {hasManga ||
+                    (true && (
+                      <TabPanel value="manga">
+                        <Stack>
+                          {isAuthor && (
+                            <Link
+                              href={{ pathname: '/m/new', query: { t: teamId } }}
+                              passHref
+                              style={{ color: 'unset' }}
                             >
-                              Добавить
-                            </Button>
-                          </Link>
-                        )}
-                        <Grid container spacing={1}>
-                          {team?.mangas?.map((m, index) => (
-                            <Grid key={index} xs={3}>
-                              <Card
-                                primary={m.name}
-                                href={`/m/${m.id}`}
-                                src={m.avatar}
-                                variant="rectangular"
-                              />
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </Stack>
-                    </TabPanel>
-                  )}
+                              <Button
+                                LinkComponent="a"
+                                variant="contained"
+                                sx={{ float: 'right', mt: 1, mb: 1 }}
+                              >
+                                Добавить
+                              </Button>
+                            </Link>
+                          )}
+                          <Grid container spacing={1}>
+                            {team?.mangas?.map((m, index) => (
+                              <Grid key={index} xs={3}>
+                                <Card
+                                  primary={m.name}
+                                  href={`/m/${m.id}`}
+                                  src={m.avatar}
+                                  variant="rectangular"
+                                />
+                              </Grid>
+                            ))}
+                          </Grid>
+                        </Stack>
+                      </TabPanel>
+                    ))}
                   {hasRanobe && <TabPanel value="ranobe">No Content</TabPanel>}
                 </TabContext>
               </Paper>
